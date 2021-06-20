@@ -1,10 +1,24 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #cc3773;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #cc3773;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #cc3773;
+}
+
 .login-page {
   width: 80%;
   padding: 8% 0 0;
   margin: auto;
 }
+
 .form {
   position: relative;
   z-index: 1;
@@ -13,8 +27,10 @@
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.445);
+  border-radius: 10px;
 }
+
 input[type=email],input[type=password],input[type=text] {
   font-family: "Roboto", sans-serif;
   outline: 0;
@@ -24,27 +40,40 @@ input[type=email],input[type=password],input[type=text] {
   margin: 0 0 15px;
   padding: 15px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 16px;
 }
+
 .btnlogin {
+  margin-top: 10px;
   font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
   outline: 0;
-  background: #cc3773;
+  background: #ffffff;
   width: 100%;
   border: 1px;
   padding: 15px;
-  border-color: #ffffff;
-  color: #FFFFFF;
-  font-size: 14px;
+  color: #CD1E79;
+  font-size: 20px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
+  border-radius: 30px;
+  border: 3px solid #CD1E79;
+  transition: 0.3s;
 }
-.login:hover {
-  background-color:#ffffff;
-  border-color: #CD1E79;
+.btnlogin:hover {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  padding: 15px;
+  font-size: 20px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  color: #ffffff;
+  background-color:#CD1E79;
+  border: 3px solid #CD1E79;
+  transition: 0.3s;
 }
+
 .form .message {
   margin: 15px 0 0;
   color: rgb(59, 55, 59);
@@ -91,11 +120,13 @@ input[type=email],input[type=password],input[type=text] {
   color: #EF3B3A;
 }
 body {
-  background: rgb(150, 144, 147); /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #CD1E79,  #ff66a3);
-  background: -moz-linear-gradient(right, #CD1E79, #ff66a3);
-  background: -o-linear-gradient(right, #CD1E79, #ff66a3);
-  background: linear-gradient(to left, #CD1E79,  #ff66a3);
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("images/caloriehome.jpg");
+  height: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
@@ -105,7 +136,7 @@ body {
 @media screen and (min-width: 320px){
     .login-page {
     position: inherit;
-    width: 70%;
+    width: 90%;
     padding: 8% 0 0;
     margin-top:48%;
 
@@ -114,7 +145,7 @@ body {
     position: relative;
     z-index: 1;
     background: #FFFFFF;
-    max-width: 200px;
+    width: 80%;
     margin: 0 auto 200px;
     padding: 20px;
     text-align: center;
@@ -151,6 +182,7 @@ body {
     .form {
     position: relative;
     z-index: 1;
+    width: 100%;
     background: #FFFFFF;
     max-width: 360px;
     margin: 0 auto 100px;
