@@ -149,7 +149,7 @@ img {
 }
 
 .headerIntro {
-    background-image: linear-gradient( rgba(26, 35, 126, 0.5), rgba(26, 35, 126, 0.5)), url(../images/aimit1.jpg);
+    background-image: linear-gradient( rgba(126, 26, 56, 0.5), rgba(126, 26, 101, 0.5)), url(../images/caloriehome.jpg);
     -webkit-transition: all 1s;
     transition: all 1s;
     -webkit-transform: matrix(1.08, 0, 0, 1.08, 0, 0);
