@@ -44,10 +44,10 @@
 	
 	
         public function get_fullname($uid){
-            $query = "SELECT fullname FROM users WHERE uid = $uid";
+            $query = "SELECT fullname FROM adminusers WHERE uid = $uid";
             $result = $this->conn->query($query) or die($this->conn->error);
             $user_data = $result->fetch_array(MYSQLI_ASSOC);
-            echo $user_data['fullname'];
+            return $user_data['fullname'];
         }
 	
         /*** starting the session ***/
