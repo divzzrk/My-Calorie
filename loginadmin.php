@@ -16,14 +16,15 @@
 </head>
 
 <?php
+$emailusername = "";
 if (isset($_POST['submit'])) { 
         $emailusername = $_POST['emailusername'];
         $password = $_POST['password']; 
 	    $login = $user->check_login($emailusername, $password);
+        
 	    if ($login) {
 	        // Login Success
-           $user->set_session();
-	       header("location:adminhome.php");
+	       header("location:admindashboard.php");
 	    } else {
 	        // Login Failed
             echo '<script type="text/javascript">';
@@ -55,7 +56,7 @@ if (isset($_POST['submit'])) {
             <h4 style="color:#CD1E79;">Admin Login</h3>
             <br>
             <form class="login-form" action="" method="POST" name="login">
-            <input type="email" placeholder="Enter e-mail" name="emailusername" required="" value="<?php echo htmlentities($_POST['emailusername'])?>"/>
+            <input type="email" placeholder="Enter e-mail" name="emailusername" required="" value="<?php echo $emailusername;?>"/>
             <input type="password" placeholder="Enter password" name="password" required=""/>
             <input onclick="return(submitlogin());" type="submit" name="submit" value="Login" class="btnlogin" />
             </form>

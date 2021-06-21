@@ -55,11 +55,6 @@
             return $_SESSION['login'];
         }
 
-        /*** setting the session variable for adminstrators ***/
-        public function set_session(){
-            $_SESSION['login'] = "ADMIN";
-        }
-
 	    public function user_logout() {
             $_SESSION['login'] = FALSE;
             unset($_SESSION);
