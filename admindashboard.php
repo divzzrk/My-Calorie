@@ -238,7 +238,7 @@
                     <th>User Name</th>
                     <th>Item Name</th>
                     <th>Category</th>
-                    <th>Date</th>
+                    <th>Date & Time</th>
                     <th>Click to add</th>
                 </tr>
                 <?php
@@ -250,12 +250,14 @@
                             $item_name = $value["item_name"];
                             $category = $value["category"];
                             $dop = $value["dop"];
+                            $dop = strtotime($dop);
+                            $datestring = date('d-M-Y H:i:s', $dop);   
                 ?>
                 <tr>
                     <td><?php echo $user_name; ?></td>
                     <td><?php echo $item_name; ?></td>
                     <td><?php echo $category; ?></td>
-                    <td><?php echo $dop; ?></td>
+                    <td><?php echo $datestring; ?></td>
                     <td>
                         <a href="addNewSuggestion.php?id=<?php echo $uid;?>" class="btn btn-success">Add Suggestion</a>
                     </td>
