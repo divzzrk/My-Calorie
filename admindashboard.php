@@ -242,71 +242,22 @@
                     <th>Click to add</th>
                 </tr>
                 <?php
-                    $sel="select * from reporttb ORDER BY datetime DESC";
-                    $result=$con->query($sel);
-                    if($result->num_rows>0){
-                        while($row=$result->fetch_assoc()){
-                            $id = $row['id'];
-                            $name = $row['name'];
-                            $issuecat = $row['issuecat'];
-                            $title = $row['title'];
-                            $state = $row['state'];
-                            $phone = $row['phone'];
-                            $mailid = $row['email'];
-                            $verified = $row['verified'];
-                            if($verified == 'y'){
-                                $ver = 'Verified';
-                                $rowcolor = "green";
-                            }
-                            else if($verified == 'n'){
-                                $ver = 'Not Verified';
-                                $rowcolor = "black";
-                            }
-                            else{
-                                $ver = 'Reported Spam';
-                                $rowcolor = "red";
-                            }
+                    $suggestions =  $user->getPendingSuggestions();
+                    if(count($suggestions) > 0){
+                        foreach($suggestions as $value){
+                            $uid = $value["id"];
+                            $user_name =  $value["user_name"];
+                            $item_name = $value["item_name"];
+                            $category = $value["category"];
+                            $dop = $value["dop"];
                 ?>
                 <tr>
-                    <td><?php echo $name ?></td>
-                    <td><?php echo $issuecat ?></td>
-                    <td><?php echo $title ?></td>
+                    <td><?php echo $user_name; ?></td>
+                    <td><?php echo $item_name; ?></td>
+                    <td><?php echo $category; ?></td>
+                    <td><?php echo $dop; ?></td>
                     <td>
-                    <a href="#myModal" class="btn btn-info" id="custId" data-toggle="modal" data-id="<?php echo $id; ?>">More Info <i class="fa fa-angle-double-right"></i></a>
-                    </td>
-                    <td><?php echo $state ?></td>
-                    <td style="color: <?php echo $rowcolor; ?>"><?php echo $ver ?></td>
-                    <td>
-                        <a href="tel:+91<?php echo $phone; ?>">
-                            <i class="fa fa-phone fa-lg" style="color:#004d4d;" aria-hidden="true"></i>
-                        </a> 
-                        <a href="mailto:<?php echo $mailid; ?>?Subject=Pravathi%20Report" target="_top">
-                            <i class="fa fa-envelope fa-lg" style="color:#004d4d; margin-left:5%;" aria-hidden="true"></i>
-                        </a>
-                    </td>
-                    <td>
-                    <div id="buttondiv">
-                <?php
-                            if($verified == 'n'){
-                ?>
-                <button name="verifybtn" class="btn btn-default btn-sm" style="border: solid 1px green;" <?php echo "onClick='verify(`$id`)'" ?>>
-					VERIFY
-				</button>
-                <button name="spambtn" class="btn btn-default btn-sm" style="border: solid 1px red;" <?php echo "onClick='spam(`$id`)'" ?>>
-					MARK SPAM
-				</button>
-                <?php
-                            }
-                            else{
-                ?>
-                <button name="verifybtn" class="btn btn-default btn-sm" style="background:#004d4d; color:white;" <?php echo "onClick='unverify(`$id`)'" ?>>
-					CLICK TO INVALIDATE
-				</button>
-                <?php
-
-                            }
-                ?>
-                    </div>
+                        <a href="addNewSuggestion.php?id=<?php echo $uid;?>" class="btn btn-success">Add Suggestion</a>
                     </td>
                 </tr>
                 <?php
@@ -315,84 +266,5 @@
                 ?>
             </table>
         </div>
-        <footer class="page-footer font-small " style="background-color:#004d4d; color:white;">
-			<div class="footer-copyright text-center"> Copyright © <font style="color: #99ffe6;">Pravathi.</font> All Rights Reserved.   </div>
-	    </footer>
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">REPORTED ISSUE</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="fetched-data"></div> 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>  
-        <script>
-            $(document).ready(function(){
-                $('#myModal').on('show.bs.modal', function (e) {
-                    var rowid = $(e.relatedTarget).data('id');
-                    $.ajax({
-                        type : 'post',
-                        url : 'fetch_record.php', //Here you will fetch records 
-                        data :  'rowid='+ rowid, //Pass $id
-                        success : function(data){
-                            $('.fetched-data').html(data);//Show fetched data from database
-                        }
-                    });
-                });
-            });
-            function verify(id){
-				$.ajax({
-                    url: "verify.php",
-                    type: "post",
-                    data: {id : id} ,
-                    success : function (response) {
-                        $( "#table1" ).load( "volunteer.php #table1" );
-                        $( "#card" ).load( "volunteer.php #card" );
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus, errorThrown);
-                    }
-                    
-                });
-			}
-            function spam(id){
-				$.ajax({
-                    url: "verify.php",
-                    type: "post",
-                    data: {spid : id} ,
-                    success : function (response) {
-                        $( "#table1" ).load( "volunteer.php #table1" );
-                        $( "#card" ).load( "volunteer.php #card" );
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus, errorThrown);
-                    }
-                    
-                });
-			}
-            function unverify(id){
-				$.ajax({
-                    url: "verify.php",
-                    type: "post",
-                    data: {uvid : id} ,
-                    success : function (response) {
-                        $( "#table1" ).load( "volunteer.php #table1" );
-                        $( "#card" ).load( "volunteer.php #card" );
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus, errorThrown);
-                    }
-                    
-                });
-			}
-        </script>
     </body>
 </html>

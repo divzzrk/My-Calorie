@@ -104,8 +104,8 @@
         
         public function getPendingSuggestions(){
             $array = array();  
-            $query = "SELECT * FROM tbsuggestion where status = 0";
-            $result = $this->conn->quer($query) or die($this->conn->error);
+            $query = "SELECT * FROM tbsuggestion where status = 0 order by dop desc";
+            $result = $this->conn->query($query) or die($this->conn->error);
             while($row = mysqli_fetch_assoc($result))  
             {  
                  $array[] = $row;  
