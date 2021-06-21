@@ -60,7 +60,35 @@
             unset($_SESSION);
             session_destroy();
 	    }
-	
+        
+        public function get_totalUsers(){
+            $query = "SELECT count(id) as count FROM tbuser";
+            $result = $this->conn->query($query) or die($this->conn->error);
+            $user_data = $result->fetch_array(MYSQLI_ASSOC);
+            return $user_data['count'];
+        }
+
+        public function get_totalAdmins(){
+            $query = "SELECT count(uid) as count FROM adminusers";
+            $result = $this->conn->query($query) or die($this->conn->error);
+            $user_data = $result->fetch_array(MYSQLI_ASSOC);
+            return $user_data['count'];
+        }
+        
+        public function get_totalUserSuggestions(){
+            $query = "SELECT count(id) as count FROM tbsuggestion where status = 0";
+            $result = $this->conn->query($query) or die($this->conn->error);
+            $user_data = $result->fetch_array(MYSQLI_ASSOC);
+            return $user_data['count'];
+        }
+
+        public function get_rejectedUserSuggestions(){
+            $query = "SELECT count(id) as count FROM tbsuggestion where status = 2";
+            $result = $this->conn->query($query) or die($this->conn->error);
+            $user_data = $result->fetch_array(MYSQLI_ASSOC);
+            return $user_data['count'];
+        }
+
         //displaying Users table
         public function select($table_name)  
         {  
@@ -74,6 +102,17 @@
            return $array;  
         }    
         
+        public function getPendingSuggestions(){
+            $array = array();  
+            $query = "SELECT * FROM tbsuggestion where status = 0";
+            $result = $this->conn->quer($query) or die($this->conn->error);
+            while($row = mysqli_fetch_assoc($result))  
+            {  
+                 $array[] = $row;  
+            }  
+            return $array;  
+        }
+
         public function addItem($food_name, $food_cat, $food_calorie ) {
             $stmt = $this->conn->prepare("INSERT INTO tbfooddrink(item_name, category, calories) VALUES(?, ?, ?)");
             $stmt->bind_param("ssi", $food_name, $food_cat, $food_calorie);

@@ -148,6 +148,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="signupform.php" style="color:white;">Add new Admin</a></li>  
+                        <li><a href="signupform.php" style="color:white;">Manage Calorie</a></li>  
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;">View <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -171,32 +172,11 @@
             </nav>
         </header>
         <?php
-            
-            $email = $_SESSION['uid'];
-            $con = new mysqli("localhost","root","","pravathidb");
-			if($con->connect_error){
-				echo '<script type="text/javascript">';
-				echo 'setTimeout(function () { swal("Connection Error!",$con->connect_error(),"error");';
-				echo '}, 0);</script>';
-			}
-            $sel="select * from pravathitb where email = '$email'";
-            $result=$con->query($sel);
-            $row=$result->fetch_assoc();
-            $name = ucwords($row["Name"]);
-            $sel = "select * from reporttb where verified = 'n'";
-            $result=$con->query($sel);
-            $numpending=$result->num_rows;
-            $doj=date("Y-m-d 00:00:00");
-            $sel = "select * from reporttb where datetime >= '$doj'";
-            $result=$con->query($sel);
-            $numtoday=$result->num_rows;
-            $sel = "select * from reporttb where verifiedby = '$email'";
-            $result=$con->query($sel);
-            $verifiedby=$result->num_rows;
-            $sel = "select * from reporttb where verifiedby = '$email' and verified = 'f'";
-            $result=$con->query($sel);
-            $spam=$result->num_rows;
             $fullname = $user->get_fullname($uid);
+            $totalUsers = $user->get_totalUsers();
+            $totalAdmins = $user->get_totalAdmins();
+            $totalUserSuggestions = $user->get_totalUserSuggestions();
+            $totalRejectedSuggestion = $user->get_rejectedUserSuggestions();
         ?>
         <div class="container-fluid welcome">
             <div class="welcometext">
@@ -215,8 +195,8 @@
                     <a class="dashboard-stat purple" href="volcard.php?name=issuever">
                         <div class="visual"><i class="fa fa-hourglass-start"></i></div>
                         <div class="details">
-                            <div class="number"><span><?php echo $numpending;?></span></div>
-                        <div class="desc">Issues to be verified</div>
+                            <div class="number"><span><?php echo $totalUsers;?></span></div>
+                        <div class="desc">Users</div>
                         </div>
                     </a>
                 </div>
@@ -224,8 +204,8 @@
                     <a class="dashboard-stat blue" href="volcard.php?name=issuetod">
                         <div class="visual"><i class="fa fa-line-chart"></i></div>
                         <div class="details">
-                            <div class="number"><span><?php echo $numtoday;?></span></div>
-                        <div class="desc">Issues Reported Today</div>
+                            <div class="number"><span><?php echo $totalAdmins;?></span></div>
+                        <div class="desc">Admins</div>
                         </div>
                     </a>
                 </div>
@@ -233,8 +213,8 @@
                     <a class="dashboard-stat hoki" href="volcard.php?name=issueyou">
                         <div class="visual"><i class="fa fa-thumbs-up"></i></div>
                         <div class="details">
-                            <div class="number"><span><?php echo $verifiedby;?></span></div>
-                        <div class="desc">Verified Issues by you</div>
+                            <div class="number"><span><?php echo $totalUserSuggestions;?></span></div>
+                        <div class="desc">Total User Suggestions</div>
                         </div>
                     </a>
                 </div>
@@ -242,27 +222,24 @@
                     <a class="dashboard-stat red" href="volcard.php?name=issuespam">
                         <div class="visual"><i class="fa fa-exclamation-triangle"></i></div>
                         <div class="details">
-                            <div class="number"><span><?php echo $spam;?></span></div>
-                        <div class="desc">Issues marked spam by you</div>
+                            <div class="number"><span><?php echo $totalRejectedSuggestion;?></span></div>
+                        <div class="desc">Rejected User Suggestions</div>
                         </div>
                     </a>
                 </div>  
             </div>
         </div>
         <div class="container-fluid" style="background-color:#d3d3d3; margin-top:0%;">
-			<h2 style="color:black;">Recent issues reported</h2>
+			<h2 style="color:black;">Pending user suggestions</h2>
 		</div>
         <div style="overflow-x:auto;">
             <table class="table table-hover" id="table1">
                 <tr style="background-color: #f2f2f2;">
-                    <th>Name</th>
+                    <th>User Name</th>
+                    <th>Item Name</th>
                     <th>Category</th>
-                    <th>Title</th>
-                    <th>Details</th>
-                    <th>State</th>
-                    <th>Verification status</th>
-                    <th>Contact</th>
-                    <th>Verify</th>
+                    <th>Date</th>
+                    <th>Click to add</th>
                 </tr>
                 <?php
                     $sel="select * from reporttb ORDER BY datetime DESC";
