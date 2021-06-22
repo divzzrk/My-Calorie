@@ -89,6 +89,33 @@
             return $user_data['count'];
         }
 
+        public function getUserSuggestion($id){
+            $query = "SELECT * FROM tbsuggestion where status = 0 and id=".$id;
+            $result = $this->conn->query($query) or die($this->conn->error);
+            $row = mysqli_fetch_assoc($result);
+            return $row;
+        }
+
+        public function setCalorie($id, $itemname, $category, $calories, $proteins, $carbohydrates, $fats){
+            $stmt = $this->conn->prepare("INSERT INTO tbfooddrink(item_name, category, calories, proteins, carbohydrates, fats) VALUES(?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssdddd", $itemname, $category, $calories, $proteins, $carbohydrates, $fats);
+            $result = $stmt->execute();
+            $stmt->close();
+            // check for successful store
+            if ($result) {
+                $stmt1 = $this->conn->prepare("UPDATE tbSuggestion set status=1 where id=?");
+                $stmt1->bind_param("d", $id);
+                $result1 = $stmt1->execute();
+                $stmt1->close();
+                if($result1){
+                    return true;
+                }
+                return false;
+            } else {
+                return false;
+            }   
+        }
+
         //displaying Users table
         public function select($table_name)  
         {  

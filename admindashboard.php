@@ -259,7 +259,7 @@
                     <td><?php echo $category; ?></td>
                     <td><?php echo $datestring; ?></td>
                     <td>
-                        <a href="addNewSuggestion.php?id=<?php echo $uid;?>" class="btn btn-success">Add Suggestion</a>
+                        <a href="addNewSuggestion.php?id=<?php echo $uid;?>" class="btn btn-primary">Add Suggestion</a>
                     </td>
                 </tr>
                 <?php
