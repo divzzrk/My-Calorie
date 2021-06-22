@@ -19,6 +19,8 @@
             $title = "Total Admins";
         }elseif($name == "totalUserSuggestions"){
             $title = "All User Suggestions";
+        }elseif($name == "totalRejectedSuggestions"){
+            $title = "Total Rejected Suggestions";
         }
         else{
             header("location:admindashboard.php");
@@ -280,6 +282,40 @@
                     <td><?php echo $post["category"]; ?></td>
                     <td><?php echo $date; ?></td>
                     <td><?php echo $status; ?></td>
+                </tr>  
+                <?php  
+                $count++;
+                }  
+                ?>
+            </tbody> 
+            <?php
+                }elseif($name=="totalRejectedSuggestions"){
+            ?>
+            <thead>  
+                <tr>
+                    <th>Sl No.</th>  
+                    <th>User Name</th>  
+                    <th>Item Name</th>  
+                    <th>Category</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>  
+                <?php  
+                $post_data = $user->selectRejectedSuggestion(); 
+                $count=1; 
+                foreach($post_data as $post)  
+                {  
+                ?>  
+                <tr>  
+                    <?php 
+                        $date = date('d/m/y', strtotime($post["dop"])); 
+                    ?>
+                    <td><?php echo $count ?></td>  
+                    <td><?php echo $post["user_name"]; ?></td>
+                    <td><?php echo $post["item_name"]; ?></td>
+                    <td><?php echo $post["category"]; ?></td>
+                    <td><?php echo $date; ?></td>
                 </tr>  
                 <?php  
                 $count++;

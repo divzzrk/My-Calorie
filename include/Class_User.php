@@ -141,6 +141,19 @@
            return $array;  
         }    
         
+        public function selectRejectedSuggestion()  
+        {  
+           $array = array();  
+           $query = "SELECT * FROM tbsuggestion where status = 2";  
+           $result = $this->conn->query($query) or die($this->conn->error); 
+           while($row = mysqli_fetch_assoc($result))  
+           {  
+                $array[] = $row;  
+           }  
+           return $array;  
+        }    
+        
+
         public function getPendingSuggestions(){
             $array = array();  
             $query = "SELECT * FROM tbsuggestion where status = 0 order by dop desc";
