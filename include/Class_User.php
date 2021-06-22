@@ -116,6 +116,18 @@
             }   
         }
 
+        public function deleteSuggestion($id){
+            $stmt1 = $this->conn->prepare("UPDATE tbSuggestion set status=2 where id=?");
+            $stmt1->bind_param("d", $id);
+            $result1 = $stmt1->execute();
+            $stmt1->close();
+            if($result1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
         //displaying Users table
         public function select($table_name)  
         {  

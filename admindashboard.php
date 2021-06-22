@@ -6,8 +6,6 @@
     if (!$user->get_session()){
        header("location:index.php");
     }
-    include_once 'include/Class_User.php';
-    $user = new User();
 ?>
 
 
@@ -21,7 +19,6 @@
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,6 +27,7 @@
         <link rel="stylesheet/less" type="text/css" href="styles/dashboardstyle.less" />
         <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
         <script src="scripts/scrollscript.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <style>
             html{
                 scroll-behaviour: smooth;
@@ -259,7 +257,8 @@
                     <td><?php echo $category; ?></td>
                     <td><?php echo $datestring; ?></td>
                     <td>
-                        <a href="addNewSuggestion.php?id=<?php echo $uid;?>" class="btn btn-primary">Add Suggestion</a>
+                        <a href="addNewSuggestion.php?id=<?php echo $uid;?>" class="btn btn-primary">Add Suggestion</a>&nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-danger" <?php echo "onClick='validate(`$uid`)'" ?>>Delete <span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
                 <?php
@@ -268,5 +267,64 @@
                 ?>
             </table>
         </div>
+        <script>
+            function validate(id) {
+              const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                      confirmButton: 'btn btn-success',
+                      cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: true
+                  })
+                  swalWithBootstrapButtons.fire({
+                    title: 'Are you sure?',
+                    text: "This suggestion will be deleted and cannot be reverted!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Delete It',
+                    cancelButtonText: 'No, Cancel!',
+                    reverseButtons: true
+                  }).then((result) => {
+                    if (result.value) {
+                       var result = deleteSuggestion(id);
+                      if(result){
+                          swalWithBootstrapButtons.fire({
+                            title: 'Success',
+                            text: "Your response has been successfully marked!",
+                            icon: 'success',
+                            confirmButtonText: 'Okay!',
+                    }) }
+                    } else if (
+                      /* Read more about handling dismissals below */
+                      result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                      swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your action is not marked :)',
+                        'error',
+                        
+                      )
+                    }
+                })
+            }
+
+            function deleteSuggestion(id){
+				$.ajax({
+                    url: "deleteSuggestion.php",
+                    type: "post",
+                    data: {fid : id} ,
+                    success : function (response) {
+                        $( "#table1" ).load( "admindashboard.php #table1" );
+                        $( "#card" ).load( "admindashboard.php #card" );
+                        return true;
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                        return false;
+                    }
+                    
+                });
+			}
+        </script>
     </body>
 </html>
