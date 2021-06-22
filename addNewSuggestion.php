@@ -46,7 +46,7 @@
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#" ><span class="glyphicon glyphicon-home"></span> Home</a></li-->
+                        <li class="active"><a href="admindashboard.php" ><span class="glyphicon glyphicon-home"></span> Home</a></li-->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="signupform.php" style="color:white;">Add new Admin</a></li>  

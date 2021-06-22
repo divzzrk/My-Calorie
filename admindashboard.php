@@ -15,7 +15,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>MyCalorie Admin</title><link rel="icon" href="images/mycal.png" type="image/x-icon">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -190,7 +190,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <a class="dashboard-stat purple" href="volcard.php?name=issuever">
+                    <a class="dashboard-stat purple" href="admincard.php?name=totalUsers">
                         <div class="visual"><i class="fa fa-hourglass-start"></i></div>
                         <div class="details">
                             <div class="number"><span><?php echo $totalUsers;?></span></div>
@@ -199,7 +199,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <a class="dashboard-stat blue" href="volcard.php?name=issuetod">
+                    <a class="dashboard-stat blue" href="admincard.php?name=totalAdmins">
                         <div class="visual"><i class="fa fa-line-chart"></i></div>
                         <div class="details">
                             <div class="number"><span><?php echo $totalAdmins;?></span></div>
@@ -208,7 +208,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <a class="dashboard-stat hoki" href="volcard.php?name=issueyou">
+                    <a class="dashboard-stat hoki" href="admincard.php?name=totalUserSuggestions">
                         <div class="visual"><i class="fa fa-thumbs-up"></i></div>
                         <div class="details">
                             <div class="number"><span><?php echo $totalUserSuggestions;?></span></div>
@@ -217,7 +217,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <a class="dashboard-stat red" href="volcard.php?name=issuespam">
+                    <a class="dashboard-stat red" href="admincard.php?name=totalRejectedSuggestions">
                         <div class="visual"><i class="fa fa-exclamation-triangle"></i></div>
                         <div class="details">
                             <div class="number"><span><?php echo $totalRejectedSuggestion;?></span></div>

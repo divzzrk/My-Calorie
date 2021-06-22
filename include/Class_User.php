@@ -76,7 +76,7 @@
         }
         
         public function get_totalUserSuggestions(){
-            $query = "SELECT count(id) as count FROM tbsuggestion where status = 0";
+            $query = "SELECT count(id) as count FROM tbsuggestion";
             $result = $this->conn->query($query) or die($this->conn->error);
             $user_data = $result->fetch_array(MYSQLI_ASSOC);
             return $user_data['count'];
