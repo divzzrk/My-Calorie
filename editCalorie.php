@@ -8,6 +8,17 @@
     }
     include_once 'include/Class_User.php';
     $user = new User();
+    $id = $_GET["id"];
+    $row = $user->getCalorie($id);
+    $item_name = $row["item_name"];
+    $category = $row["category"];
+    if($category != 'Drink' || $category != 'drink'){
+        $category = 'Food';
+    }
+    $calories = $row["calories"];
+    $proteins = $row["proteins"];
+    $carbohydrates = $row["carbohydrates"];
+    $fats = $row["fats"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -77,17 +88,17 @@
         </header>
         <div class="container-fluid" style="text-align:center; padding-top:50px; color: #CD1E79;">
             <h3>Edit Calorie</h3>
-            <form action="addCalorie.php" method="POST" enctype="multipart/form-data" >
-                <input type="text" placeholder="Food item name" name="item_name" required><br>
+            <form action="editCalorie.php?id=<?php echo $id;?>" method="POST" enctype="multipart/form-data" >
+                <input type="text" placeholder="Food item name" name="item_name" value = "<?php echo $item_name;?>" required><br>
                 <select name="category" id="category" class="category">
-                    <option value="Food">Food</option>
-                    <option value="Drink">Drink</option>
+                    <option value="Food" <?php echo ($category == 'Food') ? 'selected' : '' ?>>Food</option>
+                    <option value="Drink" <?php echo ($category == 'Drink') ? 'selected' : '' ?>>Drink</option>
                 </select><br/>
-                <input type="text" placeholder="Calories" name="calories" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
-                <input type="text" placeholder="Proteins" name="proteins" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
-                <input type="text" placeholder="Carbohydrates" name="carbohydrates" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
-                <input type="text" placeholder="Fats" name="fats" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
-                <br><button type="submit" name='btnCalorie' class="mybtn">ADD ITEM</button><br/><br/>
+                <input type="text" placeholder="Calories" name="calories" required value = "<?php echo $calories;?>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
+                <input type="text" placeholder="Proteins" name="proteins" required value = "<?php echo $proteins;?>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
+                <input type="text" placeholder="Carbohydrates" name="carbohydrates" value = "<?php echo $carbohydrates;?>" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
+                <input type="text" placeholder="Fats" name="fats" required value = "<?php echo $fats;?>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
+                <br><button type="submit" name='btnCalorie' class="mybtn">UPDATE ITEM</button><br/><br/>
             </form>
         </div>
         <?php
@@ -98,11 +109,11 @@
                 $proteins = $_POST['proteins'];
                 $carbohydrates = $_POST['carbohydrates'];
                 $fats = $_POST['fats'];
-                if($user->addCalorie($itemname, $category, $calories, $proteins, $carbohydrates, $fats)){
+                if($user->updateCalorie($id, $itemname, $category, $calories, $proteins, $carbohydrates, $fats)){
                     echo '<script type="text/javascript">';
-                    echo 'setTimeout(function () { swal("Success!","New Item Inserted Successfully","success");';
+                    echo 'setTimeout(function () { swal("Success!","Item Updated Successfully","success");';
                     echo '}, 0);</script>';
-                    echo "<meta http-equiv=Refresh content=1.5;url=admindashboard.php>";
+                    echo "<meta http-equiv=Refresh content=1.5;url=managecalorie.php>";
                 }else{
                     echo '<script type="text/javascript">';
                     echo 'setTimeout(function () { swal("Error!","Please try again after sometime","error");';

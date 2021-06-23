@@ -174,95 +174,41 @@
             </div>
         </nav>
         </header>
-        <?php
-            $fullname = $user->get_fullname($uid);
-            $totalUsers = $user->get_totalUsers();
-            $totalAdmins = $user->get_totalAdmins();
-            $totalUserSuggestions = $user->get_totalUserSuggestions();
-            $totalRejectedSuggestion = $user->get_rejectedUserSuggestions();
-        ?>
-        <div class="container-fluid welcome">
-            <div class="welcometext">
-                <h2>ADMINISTRATOR DASHBOARD</h2>
-                <h3>Welcome <?php echo $fullname; ?></h3>
-            </div>
+        <div class="jumbotron text-center" style="margin-bottom: 0%;">
+            <h2 style="color:#CD1E79; font-style:bold;">Calorie Information Table</h2>
         </div>
-        <div class="wrapper container" id="card">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="heading"></h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <a class="dashboard-stat purple" href="admincard.php?name=totalUsers">
-                        <div class="visual"><i class="fa fa-hourglass-start"></i></div>
-                        <div class="details">
-                            <div class="number"><span><?php echo $totalUsers;?></span></div>
-                        <div class="desc">Users</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <a class="dashboard-stat blue" href="admincard.php?name=totalAdmins">
-                        <div class="visual"><i class="fa fa-line-chart"></i></div>
-                        <div class="details">
-                            <div class="number"><span><?php echo $totalAdmins;?></span></div>
-                        <div class="desc">Admins</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <a class="dashboard-stat hoki" href="admincard.php?name=totalUserSuggestions">
-                        <div class="visual"><i class="fa fa-thumbs-up"></i></div>
-                        <div class="details">
-                            <div class="number"><span><?php echo $totalUserSuggestions;?></span></div>
-                        <div class="desc">Total User Suggestions</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <a class="dashboard-stat red" href="admincard.php?name=totalRejectedSuggestions">
-                        <div class="visual"><i class="fa fa-exclamation-triangle"></i></div>
-                        <div class="details">
-                            <div class="number"><span><?php echo $totalRejectedSuggestion;?></span></div>
-                        <div class="desc">Rejected User Suggestions</div>
-                        </div>
-                    </a>
-                </div>  
-            </div>
-        </div>
-        <div class="container-fluid" style="background-color:#d3d3d3; margin-top:0%;">
-			<h2 style="color:black;">Pending user suggestions</h2>
-		</div>
         <div style="overflow-x:auto;">
-            <table class="table table-hover" id="table1">
+            <table class="table table-hover table-striped" id="table1">
                 <tr style="background-color: #f2f2f2;">
-                    <th>User Name</th>
                     <th>Item Name</th>
                     <th>Category</th>
-                    <th>Date & Time</th>
-                    <th>Click to add</th>
+                    <th>Calories</th>
+                    <th>Proteins</th>
+                    <th>Carbohydrates</th>
+                    <th>Fats</th>
+                    <th>Operations</th>
                 </tr>
                 <?php
-                    $suggestions =  $user->getPendingSuggestions();
-                    if(count($suggestions) > 0){
-                        foreach($suggestions as $value){
+                    $calorieItem = $user->select('tbfooddrink'); 
+                    if(count($calorieItem) > 0){
+                        foreach($calorieItem as $value){
                             $uid = $value["id"];
-                            $user_name =  $value["user_name"];
-                            $item_name = $value["item_name"];
+                            $item_name =  $value["item_name"];
                             $category = $value["category"];
-                            $dop = $value["dop"];
-                            $dop = strtotime($dop);
-                            $datestring = date('d-M-Y H:i:s', $dop);   
+                            $calories = $value["calories"];
+                            $proteins = $value["proteins"];
+                            $carbohydrates = $value["carbohydrates"];
+                            $fats = $value["fats"];
                 ?>
                 <tr>
-                    <td><?php echo $user_name; ?></td>
                     <td><?php echo $item_name; ?></td>
                     <td><?php echo $category; ?></td>
-                    <td><?php echo $datestring; ?></td>
+                    <td><?php echo $calories; ?></td>
+                    <td><?php echo $proteins; ?></td>
+                    <td><?php echo $carbohydrates; ?></td>
+                    <td><?php echo $fats; ?></td>
                     <td>
-                        <a href="addNewSuggestion.php?id=<?php echo $uid;?>" class="btn btn-primary">Add Suggestion</a>&nbsp;&nbsp;&nbsp;
+                        <a href="editCalorie.php?id=<?php echo $uid;?>" class="btn btn-primary">Edit <span class="glyphicon glyphicon-edit"></a>&nbsp;&nbsp;&nbsp;
                         <a class="btn btn-danger" <?php echo "onClick='validate(`$uid`)'" ?>>Delete <span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
@@ -315,12 +261,11 @@
 
             function deleteSuggestion(id){
 				$.ajax({
-                    url: "deleteSuggestion.php",
+                    url: "deleteCalorie.php",
                     type: "post",
                     data: {fid : id} ,
                     success : function (response) {
-                        $( "#table1" ).load( "admindashboard.php #table1" );
-                        $( "#card" ).load( "admindashboard.php #card" );
+                        $( "#table1" ).load( "managecalorie.php #table1" );
                         return true;
                     },
                     error: function(jqXHR, textStatus, errorThrown) {

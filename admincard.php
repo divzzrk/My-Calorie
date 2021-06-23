@@ -145,7 +145,13 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="signupform.php" style="color:white;">Add new Admin</a></li>  
-                    <li><a href="signupform.php" style="color:white;">Manage Calorie</a></li>  
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;">Items <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="managecalorie.php">Manage Items</a></li>  
+                            <li><a href="addCalorie.php">Add new Item</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;">View <span class="caret"></span></a>
                         <ul class="dropdown-menu">

@@ -96,6 +96,13 @@
             return $row;
         }
 
+        public function getCalorie($id){
+            $query = "SELECT * FROM tbfooddrink where id=".$id;
+            $result = $this->conn->query($query) or die($this->conn->error);
+            $row = mysqli_fetch_assoc($result);
+            return $row;
+        }
+
         public function setCalorie($id, $itemname, $category, $calories, $proteins, $carbohydrates, $fats){
             $stmt = $this->conn->prepare("INSERT INTO tbfooddrink(item_name, category, calories, proteins, carbohydrates, fats) VALUES(?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssdddd", $itemname, $category, $calories, $proteins, $carbohydrates, $fats);
@@ -116,8 +123,46 @@
             }   
         }
 
+        public function addCalorie($itemname, $category, $calories, $proteins, $carbohydrates, $fats){
+            $stmt = $this->conn->prepare("INSERT INTO tbfooddrink(item_name, category, calories, proteins, carbohydrates, fats) VALUES(?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssdddd", $itemname, $category, $calories, $proteins, $carbohydrates, $fats);
+            $result = $stmt->execute();
+            $stmt->close();
+            // check for successful store
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }   
+        }
+
+        public function updateCalorie($id, $itemname, $category, $calories, $proteins, $carbohydrates, $fats){
+            $stmt = $this->conn->prepare("UPDATE tbfooddrink SET item_name=?, category=?, calories=?, proteins=?, carbohydrates=?, fats=? where id=?");
+            $stmt->bind_param("ssddddd", $itemname, $category, $calories, $proteins, $carbohydrates, $fats, $id);
+            $result = $stmt->execute();
+            $stmt->close();
+            // check for successful store
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }   
+        }
+
         public function deleteSuggestion($id){
             $stmt1 = $this->conn->prepare("UPDATE tbSuggestion set status=2 where id=?");
+            $stmt1->bind_param("d", $id);
+            $result1 = $stmt1->execute();
+            $stmt1->close();
+            if($result1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function deleteCalorie($id){
+            $stmt1 = $this->conn->prepare("DELETE FROM tbfooddrink where id=?");
             $stmt1->bind_param("d", $id);
             $result1 = $stmt1->execute();
             $stmt1->close();
