@@ -21,6 +21,12 @@
             $title = "All User Suggestions";
         }elseif($name == "totalRejectedSuggestions"){
             $title = "Total Rejected Suggestions";
+        }elseif($name == "food"){
+            $title = "Food Consumption Details";
+        }elseif($name == "drink"){
+            $title = "Drink Consumption Details";
+        }elseif($name == "glucose"){
+            $title = "User Glucose Readings";
         }
         else{
             header("location:admindashboard.php");
@@ -143,10 +149,10 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;">View <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="voledit.php">Users</a></li>
-                            <li><a href="volchangepass.php">User food consumed</a></li>
-                            <li><a href="volchangepass.php">User drink consumed</a></li>
-                            <li><a href="volchangepass.php">User glucose levels</a></li>
+                            <li><a href="admincard.php?name=totalUsers">Users</a></li>
+                            <li><a href="admincard.php?name=food">User food consumed</a></li>
+                            <li><a href="admincard.php?name=drink">User drink consumed</a></li>
+                            <li><a href="admincard.php?name=glucose">User glucose levels</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -323,6 +329,114 @@
                 ?>
             </tbody> 
             <?php
+                }elseif($name=="food"){
+            ?>
+            <thead>  
+                <tr>
+                    <th>Sl No.</th>  
+                    <th>User Name</th>  
+                    <th>Food Name</th>  
+                    <th>Quantity</th>
+                    <th>System Datetime</th>
+                    <th>User Datetime</th>
+                </tr>
+            </thead>
+            <tbody>  
+                <?php  
+                $post_data = $user->select('tbfood');  
+                $count=1; 
+                foreach($post_data as $post)  
+                {  
+                ?>  
+                <tr>  
+                    <?php 
+                        $sysdate = date('d/m/y h:m:s', strtotime($post["sysdatetime"])); 
+                        $userdate = date('d/m/y h:m:s', strtotime($post["user_datetime"])); 
+                    ?>
+                    <td><?php echo $count ?></td>  
+                    <td><?php echo $post["ip_number"]; ?></td>
+                    <td><?php echo $post["food_name"]; ?></td>
+                    <td><?php echo $post["food_qty"]; ?></td>
+                    <td><?php echo $sysdate; ?></td>
+                    <td><?php echo $userdate; ?></td>
+                </tr>  
+                <?php  
+                $count++;
+                }  
+                ?>
+            </tbody> 
+            <?php
+                }elseif($name=="drink"){
+            ?>
+            <thead>  
+                <tr>
+                    <th>Sl No.</th>  
+                    <th>User Name</th>  
+                    <th>Drink Name</th>  
+                    <th>Quantity</th>
+                    <th>Sugar</th>
+                    <th>System Datetime</th>
+                    <th>User Datetime</th>
+                </tr>
+            </thead>
+            <tbody>  
+                <?php  
+                $post_data = $user->select('tbdrink');  
+                $count=1; 
+                foreach($post_data as $post)  
+                {  
+                ?>  
+                <tr>  
+                    <?php 
+                        $sysdate = date('d/m/y h:m:s', strtotime($post["sysdatetime"])); 
+                        $userdate = date('d/m/y h:m:s', strtotime($post["user_datetime"])); 
+                    ?>
+                    <td><?php echo $count ?></td>  
+                    <td><?php echo $post["ip_number"]; ?></td>
+                    <td><?php echo $post["drink_name"]; ?></td>
+                    <td><?php echo $post["drink_qty"]; ?></td>
+                    <td><?php echo $post["food_sugar"]; ?></td>
+                    <td><?php echo $sysdate; ?></td>
+                    <td><?php echo $userdate; ?></td>
+                </tr>  
+                <?php  
+                $count++;
+                }  
+                ?>
+            </tbody> 
+            <?php
+                }elseif($name=="glucose"){
+            ?>
+            <thead>  
+                <tr>
+                    <th>Sl No.</th>  
+                    <th>User Name</th>  
+                    <th>Glucose Reading</th>  
+                    <th>System Datetime</th>
+                </tr>
+            </thead>
+            <tbody>  
+                <?php  
+                $post_data = $user->select('tbglucose');  
+                $count=1; 
+                foreach($post_data as $post)  
+                {  
+                ?>  
+                <tr>  
+                    <?php 
+                        $sysdate = date('d/m/y h:m:s', strtotime($post["sysdatetime"])); 
+                    ?>
+                    <td><?php echo $count ?></td>  
+                    <td><?php echo $post["ip_number"]; ?></td>
+                    <td><?php echo $post["glucose_reading"]; ?></td>
+                    <td><?php echo $sysdate; ?></td>
+                </tr>  
+                <?php  
+                $count++;
+                }  
+                ?>
+            </tbody> 
+            <?php
                 }
             ?>
                 </table>
@@ -338,7 +452,7 @@
                                 extend: 'excel',
                                 text: 'Export to Excel',
                                 className: 'btn btn-success btnexcel',
-                                title: "List of Calories - MyCalorie"
+                                title: "MyCalorie"
                             }
                         ]
                 });
