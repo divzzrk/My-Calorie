@@ -18,7 +18,7 @@
 <?php
 $emailusername = "";
 if (isset($_POST['submit'])) { 
-        $emailusername = $_POST['emailusername'];
+        $emailusername = $_POST['username'];
         $password = $_POST['password']; 
 	    $login = $user->check_login($emailusername, $password);
         
