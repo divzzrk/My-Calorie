@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
             <h4 style="color:#CD1E79;">Admin Login</h3>
             <br>
             <form class="login-form" action="" method="POST" name="login">
-            <input type="email" placeholder="Enter e-mail" name="emailusername" required="" value="<?php echo $emailusername;?>"/>
+            <input type="text" placeholder="Enter username" name="username" required="" value="<?php echo $emailusername;?>"/>
             <input type="password" placeholder="Enter password" name="password" required=""/>
             <input onclick="return(submitlogin());" type="submit" name="submit" value="Login" class="btnlogin" />
             </form>

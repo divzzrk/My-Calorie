@@ -31,7 +31,7 @@
     </head>
     <body>
     <button onclick="topFunction()" id="myBtn" title="Go to top"><span class="glyphicon glyphicon-arrow-up"></span></button>
-        <header>
+    <header>
         <nav class="navbar navbar-inverse" style=" margin:0%; background-color: #CD1E79; border: 0%; border-radius:0%;">
             <div class="container-fluid">
                 <div class="navbar-header">

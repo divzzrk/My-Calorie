@@ -8,10 +8,6 @@
     }
     include_once 'include/Class_User.php';
     $user = new User();
-    $id = $_GET["id"];
-    $row = $user->getUserSuggestion($id);
-    $item_name = $row["item_name"];
-    $category = $row["category"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,36 +76,35 @@
         </nav>
         </header>
         <div class="container-fluid" style="text-align:center; padding-top:50px; color: #CD1E79;">
-            <h3>Add New Suggestion</h3>
-            <form action="addNewSuggestion.php?id=<?php echo $id;?>" method="POST" enctype="multipart/form-data" >
-                <input type="text" placeholder="Food item name" name="item_name" value = "<?php echo $item_name;?>" required><br>
-                <select name="category" id="category" class="category">
-                    <option value="Food" <?php echo ($category == 'Food') ? 'selected' : '' ?>>Food</option>
-                    <option value="Drink" <?php echo ($category == 'Drink') ? 'selected' : '' ?>>Drink</option>
-                </select><br/>
-                <input type="text" placeholder="Calories" name="calories" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
-                <input type="text" placeholder="Proteins" name="proteins" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
-                <input type="text" placeholder="Carbohydrates" name="carbohydrates" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
-                <input type="text" placeholder="Fats" name="fats" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"><br>
-                <br><button type="submit" name='btnCalorie' class="mybtn">ADD ITEM</button><br/><br/>
+            <h3>Change Password</h3>
+            <h5>[Details once edited will be marked permanently]</h5>
+            
+            <form action="adminchangepass.php" method="POST" enctype="multipart/form-data" >
+                <input type="password" placeholder="Enter old password" name="oldpass" required><br>
+                <input type="password" placeholder="Enter new password" name="newpass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required><br>
+                <br/>
+                <br><button type="submit" name='btnSubmit' class="mybtn">CHANGE PASSWORD</button><br/><br/>
             </form>
         </div>
         <?php
-            if(isset($_POST['btnCalorie'])){
-                $itemname =  $_POST['item_name'];
-                $category = $_POST['category'];
-                $calories = $_POST['calories'];
-                $proteins = $_POST['proteins'];
-                $carbohydrates = $_POST['carbohydrates'];
-                $fats = $_POST['fats'];
-                if($user->setCalorie($id, $itemname, $category, $calories, $proteins, $carbohydrates, $fats)){
-                    echo '<script type="text/javascript">';
-                    echo 'setTimeout(function () { swal("Success!","New Item Inserted Successfully","success");';
-                    echo '}, 0);</script>';
-                    echo "<meta http-equiv=Refresh content=1.5;url=admindashboard.php>";
+            if(isset($_POST['btnSubmit'])){
+                $oldpass = $_POST["oldpass"];
+                $newpass = $_POST['newpass'];
+                if($user->checkOldPass($uid, $oldpass)){
+                    if($user->changePass($uid, $newpass)){
+                        echo '<script type="text/javascript">';
+                        echo 'setTimeout(function () { swal("Success!","Password Changed Successfully","success");';
+                        echo '}, 0);</script>';
+                        echo "<meta http-equiv=Refresh content=1.5;url=admindashboard.php>";
+                    }
+                    else{
+                        echo '<script type="text/javascript">';
+                        echo 'setTimeout(function () { swal("Error!","Please try again after sometime","error");';
+                        echo '}, 0);</script>';
+                    }
                 }else{
                     echo '<script type="text/javascript">';
-                    echo 'setTimeout(function () { swal("Error!","Please try again after sometime","error");';
+                    echo 'setTimeout(function () { swal("Error!","You have entered an invalid old password","error");';
                     echo '}, 0);</script>';
                 }
             }

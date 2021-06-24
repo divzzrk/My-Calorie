@@ -55,9 +55,9 @@
         }
 
 	    /*** for login process ***/
-		public function check_login($emailusername, $password){
+		public function check_login($username, $password){
             //$password = md5($password);
-            $query = "SELECT * from adminusers WHERE user_email='$emailusername' and user_pass='$password'";
+            $query = "SELECT * from adminusers WHERE u_name='$username' and user_pass='$password'";
             $result = $this->conn->query($query) or die($this->conn->error);
             $user_data = $result->fetch_array(MYSQLI_ASSOC);
             $count_row = $result->num_rows;
@@ -129,6 +129,30 @@
             $result = $this->conn->query($query) or die($this->conn->error);
             $row = mysqli_fetch_assoc($result);
             return $row;
+        }
+
+        public function checkOldPass($uid, $oldpass){
+            $query = "SELECT user_pass FROM adminusers where uid=".$uid;
+            $result = $this->conn->query($query) or die($this->conn->error);
+            $row = mysqli_fetch_assoc($result);
+            if($row['user_pass'] == $oldpass){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function changePass($uid, $newpass){
+            $stmt = $this->conn->prepare("UPDATE adminusers SET user_pass=? where uid=?");
+            $stmt->bind_param("sd", $newpass, $uid);
+            $result = $stmt->execute();
+            $stmt->close();
+            // check for successful store
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }   
         }
 
         public function setCalorie($id, $itemname, $category, $calories, $proteins, $carbohydrates, $fats){

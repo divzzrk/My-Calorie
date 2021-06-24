@@ -28,7 +28,7 @@
     </head>
     <body>
     <button onclick="topFunction()" id="myBtn" title="Go to top"><span class="glyphicon glyphicon-arrow-up"></span></button>
-        <header>
+    <header>
         <nav class="navbar navbar-inverse" style=" margin:0%; background-color: #CD1E79; border: 0%; border-radius:0%;">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -45,7 +45,7 @@
                     <li class="active"><a href="admindashboard.php" ><span class="glyphicon glyphicon-home"></span> Home</a></li-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="signupform.php" style="color:white;">Add new Admin</a></li>  
+                    <li><a href="addadmin.php" style="color:white;">Add new Admin</a></li>  
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;">Items <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -65,8 +65,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white;">My Account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="voledit.php">Change Password</a></li>
-                            <li><a href="volchangepass.php">Edit your account</a></li>
+                            <li><a href="adminchangepass.php">Change Password</a></li>
+                            <li><a href="adminedit.php">Edit your account</a></li>
                         </ul>
                     </li>
                     <li><a href="logout.php" style="color:white;">Log out <span class="glyphicon glyphicon-log-out"></span></a></li>
