@@ -26,7 +26,34 @@
 			else{return false;}
 		}
 			
-			
+		public function getadmindetails($uid){
+            $query = "SELECT * FROM adminusers WHERE uid = $uid";
+            $result = $this->conn->query($query) or die($this->conn->error);
+            $user_data = $result->fetch_array(MYSQLI_ASSOC);
+            return $user_data;
+        }
+	
+        public function edit_user($uid, $name, $useremail){
+            $query = "SELECT * FROM adminusers WHERE user_email='$useremail' and uid!=$uid";
+			$result = $this->conn->query($query) or die($this->conn->error);
+			$count_row = $result->num_rows;
+			//if the username is not in db then insert to the table
+			if($count_row == 0){
+                $stmt = $this->conn->prepare("UPDATE adminusers SET fullname=?, user_email=? where uid=?");
+                $stmt->bind_param("ssd", $name, $useremail, $uid);
+                $result = $stmt->execute();
+                $stmt->close();
+                // check for successful store
+                if ($result) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }else{
+                return false;
+            } 
+        }
+
 	    /*** for login process ***/
 		public function check_login($emailusername, $password){
             //$password = md5($password);
@@ -96,6 +123,7 @@
             return $row;
         }
 
+        
         public function getCalorie($id){
             $query = "SELECT * FROM tbfooddrink where id=".$id;
             $result = $this->conn->query($query) or die($this->conn->error);
