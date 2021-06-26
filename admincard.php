@@ -189,7 +189,6 @@
                     <th>Sl No.</th>  
                     <th>User Name</th>  
                     <th>Name</th>  
-                    <th>Age</th>
                     <th>Sex</th>
                     <th>Occupation</th>
                     <th>Phone number</th>
@@ -214,7 +213,6 @@
                     <td><?php echo $count ?></td>  
                     <td><?php echo $post["ip_number"]; ?></td>
                     <td><?php echo $post["user_name"]; ?></td>
-                    <td><?php echo $post["user_age"]; ?></td> 
                     <td><?php echo $post["user_sex"]; ?></td>
                     <td><?php echo $post["user_occupation"]; ?></td>
                     <td><?php echo $post["phone_number"]; ?></td>

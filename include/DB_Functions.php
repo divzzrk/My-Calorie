@@ -233,13 +233,6 @@ class DB_Functions {
  
         // check for successful store
         if ($result) {
-            /*$stmt = $this->conn->prepare("SELECT * FROM tbdrink WHERE drink_id = ?");
-            $stmt->bind_param("i", $drink_id);
-            $stmt->execute();
-            $drink = $stmt->get_result()->fetch_assoc();
-            $stmt->close();
- 
-            return $drink;*/
             return true;
         } else {
             return false;
@@ -323,7 +316,7 @@ class DB_Functions {
     }
 
     public function getFood(){
-        $stmt = "SELECT item_name, category, calories from tbfooddrink where category!='drink'";
+        $stmt = "SELECT item_name, category, calories from tbfooddrink where category!='drink' or category != 'Drink'";
         $result = mysqli_query($this->conn, $stmt);
         $food = array();
         while($row = mysqli_fetch_assoc($result)){
@@ -363,8 +356,6 @@ class DB_Functions {
     }
 
     public function updateUserDetails($ip_number, $user_dob, $gender, $height, $weight){
-        //$weight_in_pounds = round(($weight / 0.45359237),5);
-        //$height_in_inches =  round(($height * 0.39370),5);
         $stmt = $this->conn->prepare("UPDATE tbuser SET user_sex=?, date_of_birth=?, weight_in_kg=?, height_in_cm=? WHERE ip_number = ?");
         $stmt->bind_param("ssdds", $gender, $user_dob, $weight, $height, $ip_number);
         $result = $stmt->execute();
@@ -490,82 +481,5 @@ class DB_Functions {
             return false;
         }
     }
-    // public function countDrinkCalorie($ip_number, $startDate, $endDate){
-    //     $stmt = $this->conn->prepare("SELECT drink_name, drink_qty, food_sugar FROM tbdrink WHERE ip_number = ? AND user_datetime >= ? AND user_datetime < ?");
-    //     $stmt->bind_param("sss", $ip_number, $startDate, $endDate);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     $stmt->free_result();
-    //     $stmt->close();
-    //     $drink_calorie = 0;
-    //     if ($result->num_rows > 0) {
-    //         while ($row = $result->fetch_array(MYSQLI_ASSOC)) 
-    //         {   
-    //             $drink_item = $row["drink_name"];
-    //             $drink_qty = $row["drink_qty"];
-    //             $food_sugar = $row["food_sugar"];
-    //             $stmt1 = $this->conn->prepare("SELECT calories FROM tbfooddrink WHERE item_name = ?");
-    //             $stmt1->bind_param("s", $drink_item);
-    //             $stmt1->execute();
-    //             $result1 = $stmt1->get_result();
-    //             $stmt1->free_result();
-    //             $stmt1->close();
-    //             $calorie = 0;
-    //             if ($result->num_rows > 0) {
-    //                 $row1 = $result1->fetch_array(MYSQLI_ASSOC);
-    //                 $calorie = ($drink_qty * $row1["calories"]) + ($drink_qty * $food_sugar *  48); //48 is calorie for sugar
-    //                 $drink_calorie = $drink_calorie + $calorie;
-    //             }
-    //         }
-    //         return $drink_calorie;
-    //     }else{
-    //         return 0;
-    //     }
-    // }
-
-    // public function countFoodCalorie($ip_number, $startDate, $endDate){
-    //     $stmt = $this->conn->prepare("SELECT food_name, food_qty FROM tbfood WHERE ip_number = ? AND user_datetime >= ? AND user_datetime < ?");
-    //     $stmt->bind_param("sss", $ip_number, $startDate, $endDate);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-    //     $stmt->free_result();
-    //     $stmt->close();
-    //     $food_calorie = 0;
-    //     if ($result->num_rows > 0) {
-    //         while ($row = $result->fetch_array(MYSQLI_ASSOC)) 
-    //         {   
-    //             $food_item = $row["food_name"];
-    //             $food_qty = $row["food_qty"];
-    //             $stmt1 = $this->conn->prepare("SELECT calories FROM tbfooddrink WHERE item_name = ?");
-    //             $stmt1->bind_param("s", $food_item);
-    //             $stmt1->execute();
-    //             $result1 = $stmt1->get_result();
-    //             $stmt1->free_result();
-    //             $stmt1->close();
-    //             $calorie = 0;
-    //             if ($result->num_rows > 0) {
-    //                 $row1 = $result1->fetch_array(MYSQLI_ASSOC);
-    //                 $calorie = $food_qty * $row1["calories"];
-    //                 $food_calorie = $food_calorie + $calorie;
-    //             }
-    //         }
-    //         return $food_calorie;
-    //     }else{
-    //         return 0;
-    //     }
-    // }
-
-    
-
-    // //this is currently extracting the food ate on a particular day
-    // public function getCalProCarbFat($ip_number, $currDate){
-    //     $startDate = $currDate." 00:00:00";
-    //     $next_date = date('Y-m-d', strtotime($currDate .' +1 day'));
-    //     $endDate = $next_date." 00:00:00";
-    //     $FoodCaloriecount = (int)$this->countFoodCalorie($ip_number, $startDate, $endDate);
-    //     $DrinkCaloriecount = (int)$this->countDrinkCalorie($ip_number, $startDate, $endDate);
-    //     $totalCalorie = $FoodCaloriecount + $DrinkCaloriecount;
-    //     return array("TotalCalorie"=>$totalCalorie);
-    // }
 }
 ?>

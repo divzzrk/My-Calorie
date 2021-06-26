@@ -76,7 +76,7 @@
         </nav>
         </header>
         <div class="container-fluid" style="text-align:center; padding-top:50px; color: #CD1E79;">
-            <h3>Edit Calorie</h3>
+            <h3>Add Item</h3>
             <form action="addCalorie.php" method="POST" enctype="multipart/form-data" >
                 <input type="text" placeholder="Food item name" name="item_name" required><br>
                 <select name="category" id="category" class="category">
