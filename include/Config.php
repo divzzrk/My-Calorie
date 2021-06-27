@@ -10,6 +10,6 @@
 
     define("DB_HOST", "173.199.124.15:3306");
     define("DB_USER", "divya_user");
-    define("DB_PASSWORD", "divya_password");
+    define("DB_PASSWORD", "d!vy@");
     define("DB_DATABASE", "mycaloriedb");
 ?>
